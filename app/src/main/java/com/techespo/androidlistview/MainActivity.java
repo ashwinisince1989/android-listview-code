@@ -8,8 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    ArrayAdapter<String> defaultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,39 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        initUI();
+    }
+
+    private void initUI() {
+
+        final String[] arrayOfGender = {"select gender","Male", "Female", "Other"};
+        String[] arrayOfIndianState = {"Goa", "Utter Pradesh", "Punjab"};
+
+        defaultAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item
+                , arrayOfGender);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setAdapter(defaultAdapter);
+        spinner.setSelection(3);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, arrayOfGender[position],Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        ListView list = (ListView) findViewById(R.id.listview);
+        ListViewAdapter adapter = new ListViewAdapter(this, arrayOfIndianState);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
     }
