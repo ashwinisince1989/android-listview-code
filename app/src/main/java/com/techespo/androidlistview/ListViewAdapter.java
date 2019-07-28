@@ -9,22 +9,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class ListViewAdapter extends BaseAdapter {
 
     private Context context;
-    private String []items;
-    public ListViewAdapter(Context context, String [] items){
+    private ArrayList<Users>items;
+    public ListViewAdapter(Context context, ArrayList<Users> items){
         this.context =  context;
         this.items =  items;
     }
     @Override
     public int getCount() {
-        return items.length;
+        return items.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return items[position];
+        return items.get(position).getName();
     }
 
     @Override
@@ -42,7 +44,7 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         TextView txtName =  (TextView) v.findViewById(R.id.name);
-        txtName.setText(items[position]);
+        txtName.setText(items.get(position).getName());
         ImageView imgLogo = (ImageView) v.findViewById(R.id.imglogo);
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override

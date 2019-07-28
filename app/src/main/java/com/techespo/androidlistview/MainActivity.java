@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter<String> defaultAdapter;
@@ -57,13 +59,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final ArrayList<Users> usersItem =  new ArrayList<>();
+        int i=0;
+        for(String val : arrayOfIndianState){
+            Users user =  new Users();
+            user.setId(i++);
+            user.setName(val);
+            user.setPassword("Password:"+i);
+
+            usersItem.add(user);
+        }
         ListView list = (ListView) findViewById(R.id.listview);
-        ListViewAdapter adapter = new ListViewAdapter(this, arrayOfIndianState);
+        ListViewAdapter adapter = new ListViewAdapter(this, usersItem);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Toast.makeText(MainActivity.this, usersItem.get(position).getId()+":"+usersItem.get(position).getName(),Toast.LENGTH_LONG).show();
             }
         });
     }
